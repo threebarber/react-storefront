@@ -24,7 +24,7 @@ const ProductOverlay = (props) => {
   <div className="productOverlay">
     <h3>{props.product.title}</h3>
     <h4>{"$"+props.product.price}</h4>
-    <h5>{"rating: "+props.product.rating.rate + "/5"}</h5>
+    <h5>{"rating: "+props.product.rating + "/5"}</h5>
   </div>
   )
 };
@@ -41,7 +41,8 @@ const ProductDisplay = (props) => {
       <div
         className="productImageDiv"
         style={{
-          backgroundImage: "url(" + props.product.image + ")",
+          backgroundImage: "url(" + props.product.images[0] + ")",
+          backgroundSize:"100% 100%"
         }}
       >
         {isHovering && (
