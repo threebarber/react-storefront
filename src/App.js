@@ -19,15 +19,37 @@ const SidebarSection = (props) => {
   return <div className="sidebar">{props.children}</div>;
 };
 
-const ProductDisplay = (props) => {
+const ProductOverlay = (props) => {
   return (
-    <div className="productDiv">
+  <div className="productOverlay">
+    <h3>{props.product.title}</h3>
+    <h4>{"$"+props.product.price}</h4>
+    <h5>{"rating: "+props.product.rating.rate + "/5"}</h5>
+  </div>
+  )
+};
+
+const ProductDisplay = (props) => {
+  const [isHovering, setIsHovering] = useState(false);
+
+  return (
+    <div
+      className="productDiv"
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+    >
       <div
         className="productImageDiv"
         style={{
           backgroundImage: "url(" + props.product.image + ")",
         }}
-      ></div>
+      >
+        {isHovering && (
+         
+         <ProductOverlay product={props.product} />
+
+        )}
+      </div>
     </div>
   );
 };
