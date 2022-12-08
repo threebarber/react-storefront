@@ -19,6 +19,15 @@ const SidebarSection = (props) => {
   return <div className="sidebar">{props.children}</div>;
 };
 
+const UserInput = (props) => {
+  return (
+    <div>
+      <label>{props.label}</label>
+      <input onChange={props.onChange} type="text" />
+    </div>
+  );
+};
+
 const ProductOverlay = (props) => {
   return (
   <div className="productOverlay">
@@ -55,6 +64,13 @@ const ProductDisplay = (props) => {
 };
 
 function App() {
+
+  const handleSearchChange = (event) => {
+    console.log(event.target.value);
+    setNewSearch(event.target.value);
+  }
+
+
   useEffect(() => {
     console.log("Starting effect");
     comms.getAll().then((initialProducts) => {
@@ -65,6 +81,7 @@ function App() {
   }, []);
 
   const [allProducts, setAllProducts] = useState([]);
+  const [newSearch, setNewSearch] = useState("");
 
   return (
     <ContainerSection>
@@ -74,12 +91,32 @@ function App() {
 
       <SidebarSection>
         <h2>Sidebar</h2>
+        <UserInput label="Search" onChange={handleSearchChange} />
       </SidebarSection>
 
       <StoreSection>
-        {allProducts.map((product) => (
+
+      {
+        allProducts
+        .filter((product) =>
+          product.title.toLowerCase().includes(newSearch.toLowerCase())
+        ).length >= 1
+
+        ?
+
+        allProducts
+        .filter((product) =>
+          product.title.toLowerCase().includes(newSearch.toLowerCase())
+        ).map((filteredProduct) => (
+          <ProductDisplay product={filteredProduct} />
+        ))
+
+        :
+        
+        allProducts.map((product) => (
           <ProductDisplay product={product} />
-        ))}
+        ))
+      }
       </StoreSection>
     </ContainerSection>
   );
