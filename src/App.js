@@ -34,12 +34,11 @@ const ProductDisplay = (props) => {
 
   return (
     <div
-      className="productDiv"
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
-    >
+      className="productDiv">
       <div
         className="productImageDiv"
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
         style={{
           backgroundImage: "url(" + props.product.images[0] + ")",
           backgroundSize:"100% 100%"
